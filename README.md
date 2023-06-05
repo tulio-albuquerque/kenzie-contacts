@@ -138,7 +138,7 @@ URL: /api/users/{id}
 
 Autenticação necessária
 
-Retorno esperado
+Nenhum retorno esperado
 
 **STATUS 204 No Content**
 
@@ -238,7 +238,7 @@ URL: /api/users/{id}
 
 Autenticação necessária
 
-Retorno esperado
+Nenhum retorno esperado
 
 **STATUS 204 No Content**
 
