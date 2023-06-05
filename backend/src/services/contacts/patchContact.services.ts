@@ -1,13 +1,12 @@
-import { UserUpdateRequest, UserResponse } from "../../interfaces/users.interfaces"
 import { AppDataSource } from "../../data-source"
 import User from "../../entities/users.entity"
 import { Repository } from "typeorm"
-import { returnUserSchema } from "../../schemas/users.schemas"
 
 import Contact from "../../entities/contacts.entity"
-import { ContactRequest, ContactResponse } from "../../interfaces/contacts.interfaces"
+import { ContactResponse, ContactUpdateRequest } from "../../interfaces/contacts.interfaces"
+import { returnContactSchema } from "../../schemas/contacts.schemas"
 
-const patchContactService = async (contactId: number, newUserData: UserUpdateRequest): Promise<ContactResponse> => {
+const patchContactService = async (contactId: number, newUserData: ContactUpdateRequest): Promise<ContactResponse> => {
   const contactRepository: Repository<Contact> = AppDataSource.getRepository(Contact)
 
   const oldContactData: Contact = await contactRepository.findOneByOrFail({
@@ -21,7 +20,7 @@ const patchContactService = async (contactId: number, newUserData: UserUpdateReq
 
   await contactRepository.save(contact)
 
-  const updatedContact: ContactResponse = returnUserSchema.parse(contact)
+  const updatedContact: ContactResponse = returnContactSchema.parse(contact)
 
   return updatedContact
 }

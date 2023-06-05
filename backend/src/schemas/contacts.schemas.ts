@@ -18,8 +18,7 @@ const createContactSchema = contactSchema.omit({
 
 
 const returnContactSchema = contactSchema.omit({
-  user: true,
-  createdAt: true
+  user: true
 })
 
 const updateContactSchema = createContactSchema.partial()
