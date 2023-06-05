@@ -2,6 +2,34 @@
 
 Uma solução para os seus contatos.
 
+## Rodar aplicação
+
+### Backend
+
+```shell
+cd backend
+yarn
+yarn dev
+
+```
+
+#### Via Docker
+
+```shell
+cd backend
+docker-compose up
+
+```
+
+### Frontend
+
+```shell
+cd frontend
+yarn
+yarn dev
+
+```
+
 ## Authentication
 
 A autenticação nas rotas da API é feita utilizando o token de autenticação do tipo Bearer. O token deve ser enviado no cabeçalho da requisição.
