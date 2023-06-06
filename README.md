@@ -43,7 +43,36 @@ Authorization: Bearer <token>
 
 ### Profile
 
+Retorna todos os usuarios com todos os contatos
+
+#### Essa rota necessita de autenticação
+#### Usuario deve ser admin
+
+Método: GET
+
+URL: /api/profile
+
+Essa rota não espera dados pelo body
+
+### Retorno esperado
+**STATUS 200 Ok**
+```json
+[
+  {
+    "id": 1,
+    "name": "Fulano de Tal",
+    "email": "fulano@example.com",
+    "phone": "1234567890",
+    "admin": true,
+    "createdAt": "2023-06-05"
+  }
+]
+
+### Profile
+
 Retorna usuario logado
+
+#### Essa rota necessita de autenticação
 
 Método: GET
 
@@ -127,6 +156,9 @@ Retorno esperado
 
 Retorna a lista de usuários cadastrados.
 
+#### Essa rota necessita de autenticação
+#### Usuario deve ser admin
+
 Método: GET
 URL: /api/users
 
@@ -153,6 +185,8 @@ Retorno esperado
 #### Atualizar Usuário
 
 Atualiza as informações de um usuário existente.
+
+#### Essa rota necessita de autenticação
 
 Método: PATCH
 
@@ -184,6 +218,8 @@ Retorno esperado
 #### Excluir Usuário
 
 Exclui um usuário existente.
+
+#### Essa rota necessita de autenticação
 
 Método: DELETE
 
@@ -235,6 +271,8 @@ Corpo da requisição:
 
 Retorna a lista de contatos cadastrados pelo usuario logado.
 
+#### Essa rota necessita de autenticação
+
 Método: GET
 
 URL: /api/contacts
@@ -258,6 +296,8 @@ Retorno esperado
 
 ####  Atualizar Contato
 Descrição: Atualiza as informações de um contato
+
+#### Essa rota necessita de autenticação
 
 Método: PATCH
 
@@ -286,6 +326,8 @@ Retorno esperado
 ### Excluir Contato
 
 Exclui um contato
+
+#### Essa rota necessita de autenticação
 
 Método: DELETE
 
