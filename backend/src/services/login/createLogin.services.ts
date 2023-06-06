@@ -3,12 +3,13 @@ import User from "../../entities/users.entity"
 import { AppDataSource } from "../../data-source"
 import { compare } from "bcryptjs"
 import { AppError } from "../../error"
-import { LoginRequest } from "../../interfaces/login.interfaces"
+import { LoginRequest, LoginResponse } from "../../interfaces/login.interfaces"
 
 import jwt from "jsonwebtoken"
 import "dotenv/config"
+import { returnLoginSchema } from "../../schemas/login.schemas"
 
-const createLoginService = async (loginData: LoginRequest): Promise<string> => {
+const createLoginService = async (loginData: LoginRequest): Promise<LoginResponse> => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User)
 
   const user = await userRepo.findOneByOrFail({
@@ -22,6 +23,7 @@ const createLoginService = async (loginData: LoginRequest): Promise<string> => {
 
   const token = jwt.sign(
     {
+      id: user.id,
       admin: user.admin
     },
     process.env.SECRET_KEY!,
@@ -31,7 +33,10 @@ const createLoginService = async (loginData: LoginRequest): Promise<string> => {
     }
   )
 
-  return token
+  return returnLoginSchema.parse({
+    token: token,
+    user: user
+  })
 }
 
 export default createLoginService

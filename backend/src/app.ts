@@ -4,6 +4,7 @@ import userRouters from "./routers/users.routers"
 import { errorHandler } from "./error"
 import loginRouters from "./routers/login.routers"
 import contactRouters from "./routers/contacts.routers"
+import profileRouters from "./routers/profile.routers"
 import cors from "cors"
 
 
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use("/api/users", userRouters)
 app.use("/api/contacts", contactRouters)
 app.use("/api/login", loginRouters)
+app.use("/api/profile", profileRouters)
 
 app.use(errorHandler)
 

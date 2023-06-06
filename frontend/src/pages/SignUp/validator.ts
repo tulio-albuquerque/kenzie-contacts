@@ -2,9 +2,7 @@ import { z } from "zod"
 
 export const schema = z.object({
   name: z.string().nonempty("Nome é obrigatório"),
-  email: z.string()
-    .min(1, "O e-mail é obrigatório")
-    .email("O e-mail deve estar no formato correto"),
+  email: z.string().email("Deve ser um e-mail"),
   password: z.string(),
   //   .min(8, { message: "A senha é obrigatória e precisa de mínimo 8 caracteres"})
   //   .regex(/(?=.*?[A-Z])/, "É necessário ao menos uma letra maiúscula")

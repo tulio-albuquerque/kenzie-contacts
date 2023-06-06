@@ -4,8 +4,9 @@ import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { SignUpData } from "../pages/SignUp/validator";
 import { AxiosError } from "axios";
+import { EditUserData } from "../components/Modals/User/EditModal/validator";
 
-export interface RegisterData {
+export interface UserData {
   id: number
   name: string
   email: string
@@ -19,9 +20,13 @@ interface AuthProviderProps {
 }
 
 interface AuthContextValues {
+  user: UserData | null | undefined
+  loading: boolean
+  logout: () => void,
+  deleteUser: () => void,
+  editUser: (data: EditUserData) => void,
   signIn: (data: LoginData) => void,
   signUp: (data: SignUpData) => void,
-  loading: boolean
 }
 
 export interface ApiError {
@@ -36,24 +41,86 @@ export const AuthContext = createContext<AuthContextValues>(
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate()
+  const [user, setUser] = useState<UserData | null>();
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem("kenzie-contacts:token")
+    const getProfile = async () => {
+      const token = localStorage.getItem("kenzie-contacts:token")
 
-    if(!token) {
-      return
+      if(!token) {
+        setLoading(false)
+        return
+      }
+      try {
+        api.defaults.headers.common.authorization = `Bearer ${token}`
+        const { data } = await api.get("profile")
+        setUser(data)
+      } catch(err) {
+        console.log(err)
+      } finally {
+        setLoading(false)
+      }
     }
 
-    api.defaults.headers.common.authorization = `Bearer ${token}`
-    setLoading(false)
-  }, [loading])
+    getProfile()
+  }, [])
+
+  const editUser = async (data: EditUserData) => {
+    try {
+      const response = await api.patch(`users/${user?.id}`, data)
+
+      setUser(response.data)
+
+      navigate("/profile")
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const deleteUser = async () => {
+    try {
+      if(user) {
+        await api.delete(`users/${user.id}`)
+        
+        setUser(null)
+        localStorage.clear()
+
+        navigate("/")
+      }
+    } catch(err) {
+      console.log()
+    }
+  }
+
+  const logout = async () => {
+    localStorage.clear();
+    setUser(null);
+    navigate("/");
+  }
+
+  const signIn = async (data: LoginData) => {
+    try {
+      const response = await api.post("login", data)
+      const { token, user } = response.data
+
+      setUser(user)
+      localStorage.setItem("kenzie-contacts:token", token)
+      localStorage.setItem("kenzie-contacts:id", user.id)
+      api.defaults.headers.common.authorization = `Bearer ${token}`
+
+      navigate("/contacts")
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
   const signUp = async (data: SignUpData) => {
-    console.log("oi")
+    localStorage.clear()
     try {
       setLoading(true);
       await api.post("/users", data);
+
       navigate("/");
     } catch (error) {
       const apiError = error as AxiosError<ApiError>;
@@ -64,23 +131,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
-  const signIn = async (data: LoginData) => {
-    try {
-      const response = await api.post("/login", data)
-      const { token } = response.data
-
-      api.defaults.headers.common.authorization = `Bearer ${token}`
-      localStorage.setItem("kenzie-contacts:token", token)
-
-      navigate("/contacts")
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
   return (
     <AuthContext.Provider
-       value={{signIn, signUp, loading}}
+       value={{user, loading, logout, editUser, deleteUser, signIn, signUp}}
     >
       {children}
     </AuthContext.Provider>

@@ -41,6 +41,29 @@ Authorization: Bearer <token>
 
 ## Endpoints
 
+### Profile
+
+Retorna usuario logado
+
+Método: GET
+
+URL: /api/profile
+
+Essa rota não espera dados pelo body
+
+### Retorno esperado
+**STATUS 200 Ok**
+```json
+{
+	"id": 3,
+	"name": "Fulano de Tal Jr",
+	"email": "fulano@example.com",
+	"phone": "1234567890",
+	"admin": true,
+	"createdAt": "2023-06-05"
+}
+```
+
 ### Login
 
 Realiza o login do usuário.
@@ -109,6 +132,8 @@ URL: /api/users
 
 Autenticação necessária
 
+Essa rota não espera dados pelo body
+
 Retorno esperado
 
 **STATUS 200 Ok**
@@ -165,6 +190,8 @@ Método: DELETE
 URL: /api/users/{id}
 
 Autenticação necessária
+
+Essa rota não espera dados pelo body
 
 Nenhum retorno esperado
 
@@ -265,6 +292,8 @@ Método: DELETE
 URL: /api/users/{id}
 
 Autenticação necessária
+
+Essa rota não espera dados pelo body
 
 Nenhum retorno esperado
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SignUp = styled.main`
+export const Register = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;

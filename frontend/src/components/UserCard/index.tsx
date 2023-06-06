@@ -1,32 +1,28 @@
+import { useContext } from "react"
+import { AuthContext } from "../../providers/AuthProvider"
 import { ContactActions, ContactBody, ContactHeader, ContactInfo, UserCard as Container } from "./styles"
 
 import { MdDelete, MdModeEditOutline } from "react-icons/md"
 
-interface User {
-  id: number,
-  name: string,
-  email: string,
-  phone: string,
-  admin: boolean
-}
 
 interface Props {
-  user: User
   setHideEdit: (value: boolean) => void
   setHideDelete: (value: boolean) => void
 }
 
-export const UserCard = ({user, setHideEdit, setHideDelete}: Props) => {
+export const UserCard = ({setHideEdit, setHideDelete}: Props) => {
+
+  const { user } = useContext(AuthContext)
 
   return (
     <Container>
       <ContactHeader>
-        {user.name}
+        {user?.name}
       </ContactHeader>
       <ContactBody>
         <ContactInfo>
-          <span>Phone: {user.phone}</span>
-          <span>E-mail: {user.email}</span>
+          <span>Phone: {user?.phone}</span>
+          <span>E-mail: {user?.email}</span>
         </ContactInfo>
         <ContactActions>
           <button onClick={() => setHideEdit(false)}>
@@ -37,5 +33,6 @@ export const UserCard = ({user, setHideEdit, setHideDelete}: Props) => {
           </button>
         </ContactActions>
       </ContactBody>
-    </Container>)
+    </Container>
+  )
 }

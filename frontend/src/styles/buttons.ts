@@ -81,3 +81,25 @@ export const RemoveButton = styled.button`
   border-radius: 4px;
   padding: 10.5px 23.5px;
 `;
+
+export const IconButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.6rem;
+  height: 4.6rem;
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: none;
+`
+
+export const ProfileButton = styled(IconButton)`
+  width: auto;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  color: #495057;
+  cursor: pointer;
+`

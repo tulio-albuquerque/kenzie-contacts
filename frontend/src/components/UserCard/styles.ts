@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const UserCard = styled.li`
+export const UserCard = styled.div`
   min-height: 4.8rem;
   border: 0.1rem solid black;
   border-radius: 0.8rem;
   padding-inline: 0.8rem;
+  margin: 1.6rem;
   font-size: 1.6rem;
 `
 

@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form"
 import { SignUpData, schema } from "./validator"
 import { useAuth } from "../../hooks/useAuth"
 
-import { SignUp as Container, Card } from "./styles"
+import { Register as Container, Card } from "./styles"
 import { BrandButton } from "../../styles/buttons"
 import { Field, Fields } from "../../styles/forms"
 
-export const SignUp = () => {
+export const Register = () => {
   const { register, handleSubmit } = useForm<SignUpData>({
     resolver: zodResolver(schema)
   })

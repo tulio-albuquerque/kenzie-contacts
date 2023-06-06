@@ -1,17 +1,21 @@
 import { useContext, useState } from "react"
-import { ContactList, Contacts as Container, Navbar } from "./styles"
+import { ContactList, Contacts as Container } from "./styles"
 
-import { MdOutlineAdd } from "react-icons/md"
+// import { MdOutlineAdd } from "react-icons/md"
 import { EditContactModal } from "../../components/Modals/Contact/EditModal"
 import { DeleteContactModal } from "../../components/Modals/Contact/DeleteModal"
-import { BrandButton } from "../../styles/buttons"
+// import { BrandButton } from "../../styles/buttons"
 import { ContactData } from "../../components/Modals/Contact/EditModal/validator"
 import { Contact, ContactContext } from "../../providers/ContactProvider"
 import { ContactCard } from "../../components/ContactCard"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import Navbar from "../../components/Navbar"
+import { AuthContext } from "../../providers/AuthProvider"
+// import { Navbar } from "../../styles/nav"
 
 export const Contacts = () => {
   const navigate = useNavigate()
+  const { logout } = useContext(AuthContext)
   const { contacts, addContact, editContact, removeContact } = useContext(ContactContext)
   const [contactInfo, setContactInfo]= useState<Contact>({
     id: 0,
@@ -40,11 +44,10 @@ export const Contacts = () => {
 
   return (
     <Container>
-      <Navbar>
-        <h1>Contacts</h1>
-        <BrandButton onClick={() => setHideAdd(false)}>
-          <MdOutlineAdd />
-        </BrandButton>
+      <Navbar title="Contacts">
+        <li><a onClick={() => setHideAdd(false)}>Adicionar Contato</a></li>
+        <li><Link to="/profile">Abrir Perfil</Link></li>
+        <li><a onClick={() => logout()}>Sair</a></li>
       </Navbar>
       <ContactList>
         {
