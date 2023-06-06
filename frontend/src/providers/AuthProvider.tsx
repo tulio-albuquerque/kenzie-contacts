@@ -2,7 +2,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { LoginData } from "../pages/Login/validator";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { SignUpData } from "../pages/SignUp/validator";
+import { RegisterData } from "../pages/SignUp/validator";
 import { AxiosError } from "axios";
 import { EditUserData } from "../components/Modals/User/EditModal/validator";
 
@@ -26,7 +26,7 @@ interface AuthContextValues {
   deleteUser: () => void,
   editUser: (data: EditUserData) => void,
   signIn: (data: LoginData) => void,
-  signUp: (data: SignUpData) => void,
+  signUp: (data: RegisterData) => void,
 }
 
 export interface ApiError {
@@ -115,8 +115,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
-  const signUp = async (data: SignUpData) => {
-    localStorage.clear()
+  const signUp = async (data: RegisterData) => {
     try {
       setLoading(true);
       await api.post("/users", data);
