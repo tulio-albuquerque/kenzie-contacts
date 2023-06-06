@@ -5,7 +5,7 @@ import { ContactList, Contacts as Container } from "./styles"
 import { EditContactModal } from "../../components/Modals/Contact/EditModal"
 import { DeleteContactModal } from "../../components/Modals/Contact/DeleteModal"
 // import { BrandButton } from "../../styles/buttons"
-import { ContactData } from "../../components/Modals/Contact/EditModal/validator"
+import { ContactData } from "../../components/Modals/Contact/validator"
 import { Contact, ContactContext } from "../../providers/ContactProvider"
 import { ContactCard } from "../../components/ContactCard"
 import { Link, useNavigate } from "react-router-dom"
@@ -15,7 +15,7 @@ import { AuthContext } from "../../providers/AuthProvider"
 
 export const Contacts = () => {
   const navigate = useNavigate()
-  const { logout } = useContext(AuthContext)
+  const { user, logout } = useContext(AuthContext)
   const { contacts, addContact, editContact, removeContact } = useContext(ContactContext)
   const [contactInfo, setContactInfo]= useState<Contact>({
     id: 0,
@@ -46,6 +46,11 @@ export const Contacts = () => {
     <Container>
       <Navbar title="Contacts">
         <li><a onClick={() => setHideAdd(false)}>Adicionar Contato</a></li>
+        {
+          user?.admin ? 
+          <li><Link to="/report">Abrir Relatorio</Link></li> :
+          <></>
+        }
         <li><Link to="/profile">Abrir Perfil</Link></li>
         <li><a onClick={() => logout()}>Sair</a></li>
       </Navbar>

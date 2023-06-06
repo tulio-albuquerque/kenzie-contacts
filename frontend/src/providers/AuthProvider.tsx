@@ -2,9 +2,10 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { LoginData } from "../pages/Login/validator";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { RegisterData } from "../pages/SignUp/validator";
+import { RegisterData } from "../pages/Register/validator";
 import { AxiosError } from "axios";
 import { EditUserData } from "../components/Modals/User/EditModal/validator";
+import { ContactData } from "../components/Modals/Contact/validator";
 
 export interface UserData {
   id: number
@@ -13,6 +14,14 @@ export interface UserData {
   password: string
   phone: string
   admin: boolean
+}
+
+export interface ContactReportData extends ContactData {
+  id: number
+}
+
+export interface ReportData extends UserData {
+  contacts: ContactReportData[]
 }
 
 interface AuthProviderProps {
@@ -24,6 +33,7 @@ interface AuthContextValues {
   loading: boolean
   logout: () => void,
   deleteUser: () => void,
+  retriveReport: () => Promise<ReportData[]>
   editUser: (data: EditUserData) => void,
   signIn: (data: LoginData) => void,
   signUp: (data: RegisterData) => void,
@@ -129,10 +139,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setLoading(false);
     }
   }
+  const retriveReport = async (): Promise<ReportData[]> => {
+    try {
+      const response = await api.get<ReportData[]>("report")
+      return response.data
+    } catch(err) {
+      console.log(err)
+      throw err
+    }
+  }
 
   return (
     <AuthContext.Provider
-       value={{user, loading, logout, editUser, deleteUser, signIn, signUp}}
+       value={{user, retriveReport,
+        loading, logout, editUser, deleteUser, signIn, signUp}}
     >
       {children}
     </AuthContext.Provider>

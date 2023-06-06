@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { ContactData, schema } from "./validator"
+import { ContactData, schema } from "../validator"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Header, Modal, ModalBody, ModalWrapper, Buttons } from "./styles"
